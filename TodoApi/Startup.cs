@@ -20,8 +20,6 @@ namespace TodoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TodoContext>(opt =>
-                opt.UseInMemoryDatabase("TodoList"));
             services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .ConfigureApiBehaviorOptions(options => {
@@ -29,6 +27,9 @@ namespace TodoApi
 
                     options.ClientErrorMapping[404].Link = "https://httpstatuses.com/404";
                 });
+
+            services.AddDbContext<TodoContext>(opt =>
+    opt.UseNpgsql("Host=localhost;Database=todolist;Username=postgres;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
